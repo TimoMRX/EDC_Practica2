@@ -10,7 +10,7 @@ wire zalu;
 // Saltos (J, JR, JZ, JNZ) 
 registro#(10) PC(.clk(clk), .reset(reset), .d(pc_in), .q(pc_out));
 
-mux2#(10) muxPC(.d0(sum_out), .d1(instruction[9:0]), .s(s_abs), .y(pc_in));
+mux2#(10) muxPC(.da0(sum_out), .d1(instruction[9:0]), .s(s_abs), .y(pc_in));
 mux2#(10) muxSUM(.d0(instruction[9:0]), .d1(10'b1), .s(s_inc), .y(mux_out));
 sum sum(.a(pc_out), .b(mux_out), .y(sum_out));
 
