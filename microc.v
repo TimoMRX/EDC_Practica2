@@ -10,7 +10,7 @@ wire zalu;
 // Saltos (J, JR, JZ, JNZ) 
 registro#(10) PC(.clk(clk), .reset(reset), .d(pc_in), .q(pc_out));
 
-mux2#(10) muxPC(.da0(sum_out), .d1(instruction[9:0]), .s(s_abs), .y(pc_in));
+mux2#(10) muxPC(.d0(sum_out), .d1(instruction[9:0]), .s(s_abs), .y(pc_in));
 mux2#(10) muxSUM(.d0(instruction[9:0]), .d1(10'b1), .s(s_inc), .y(mux_out));
 sum sum(.a(pc_out), .b(mux_out), .y(sum_out));
 
@@ -24,7 +24,6 @@ mux2 muxINM(.d0(alu_out), .d1(inm), .s(s_inm), .y(wd3));
 
 
 assign variableBasura = instruction[11:4];
-assign variableTimo [7:0] = 8'b0;
 
 regfile register(.clk(clk), .we3(we3), .ra1(variableBasura[7:4]), .ra2(variableBasura[3:0]), .wa3(instruction[3:0]), .wd3(wd3), .rd1(rd1), .rd2(rd2));
 
