@@ -12,5 +12,3 @@ module memprog(input  wire clk,
   end
   assign rd = mem[a];
 endmodule
-
-

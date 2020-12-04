@@ -18,18 +18,21 @@ always
    end   
 initial
   begin
+   // hacemos un reset 
+   reset=1;
+   #10;
+   reset=0;
+  end
+
+initial
+  begin
  // sentencia para mostrar los valores de tiempo y variables
   $monitor("tiempo=%0d z=b s_abs=%b wez=%b reset=%b s_inc=%b we3=%b op=%0d clk=%b s_inm=%b opcode=%0d", $time, clk ,s_abs, s_inc, s_inm, wez, reset, op, z, opcode);
   $dumpfile("microc_tb.vcd");
   $dumpvars;
-  // hacemos un reset de ciclos de 20ns
-   reset=1;
-   #10;
-   reset=0;
-   #10;
 
-   
-  // Li 1,R5
+  #20;
+  // Li 1,R1
   s_abs=0;
   s_inc=1;
   s_inm=1;
@@ -38,8 +41,8 @@ initial
   op=3'b000;
 
 
-  // Li 1,R4
-  #40
+  // Li 2,R2
+  #40;
   s_abs=0;
   s_inc=1;
   s_inm=1;
@@ -48,18 +51,18 @@ initial
   op=3'b000;
 
 
-  //Li 2,R2
-  #40
+  // AND R3, R0, R3
+  #40;
   s_abs=0;
   s_inc=1;
-  s_inm=1;
+  s_inm=0;
   we3=1;
-  wez=0;
-  op=3'b000;
+  wez=1;
+  op=3'b100;
 
 
-  //  J CHECK 
-  #40
+  // J SIGUE
+  #40;
   s_abs=1;
   s_inc=0;
   s_inm=0;
@@ -68,38 +71,17 @@ initial
   op=3'b000;
 
 
-  // SUB R5,R2,R0
-  #40
-  s_abs=0;
-  s_inc=1;
-  s_inm=0;
-  we3=1;
-  wez=1;
-  op=3'b011;
-
-
-  // JNZ LOOP
-  #40
-  s_abs=1;
-  s_inc=1;
-  s_inm=1;
-  we3=0;
-  wez=0;
-  op=3'b000;
-
-
-  // ADD R5,R4,R5
-  #40
+  // ADD R3, R1, R3
+  #40;
   s_abs=0;
   s_inc=1;
   s_inm=0;
   we3=1;
   wez=1;
   op=3'b010;
-  
-  
-  // SUB R5,R2,R0
-  #40
+
+  // SUB R2, R1, R2
+  #40;
   s_abs=0;
   s_inc=1;
   s_inm=0;
@@ -107,56 +89,98 @@ initial
   wez=1;
   op=3'b011;
 
+  #40;
+  if (z == 1) begin
+    // JZ FIN
+    
+    s_abs=1;
+    s_inc=0;
+    s_inm=0;
+    we3=0;
+    wez=0;
+    op=3'b000;
 
-  // JNZ LOOP
-  #40
+  end
+
+  
+  // JR SIGUE
+  #40;
+  s_abs=0;
+  s_inc=0;
+  s_inm=0;
+  we3=0;
+  wez=0;
+  op=3'b000;
+
+  // ADD R3, R1, R3
+  #40;
   s_abs=0;
   s_inc=1;
-  s_inm=1;
-  we3=0;
-  wez=0;
-  op=3'b000;
+  s_inm=0;
+  we3=1;
+  wez=1;
+  op=3'b010;
+
+
+  // SUB R2, R1, R2
+  #40;
+  s_abs=0;
+  s_inc=1;
+  s_inm=0;
+  we3=1;
+  wez=1;
+  op=3'b011;
+    
+  if (z == 1) begin
+    // JZ FIN
+    
+    s_abs=1;
+    s_inc=0;
+    s_inm=0;
+    we3=0;
+    wez=0;
+    op=3'b000;
+
+  end
   
-  
-  // JR END
-  #40
+  /// JR FIN   
+  #40;
   s_abs=0;
   s_inc=0;
-  s_inm=1;
-  we3=0;
-  wez=0;
-  op=3'b000;
-  
-  
-  // JR END
-  #40
-  s_abs=0;
-  s_inc=0;
-  s_inm=1;
-  we3=0;
-  wez=0;
-  op=3'b000;
-  
-  
-  // JR END
-  #40
-  s_abs=0;
-  s_inc=0;
-  s_inm=1;
-  we3=0;
-  wez=0;
-  op=3'b000;
-  
-  
-  // JR END
-  #40
-  s_abs=0;
-  s_inc=0;
-  s_inm=1;
+  s_inm=0;
   we3=0;
   wez=0;
   op=3'b000;
 
+  /// JR FIN   
+  #40;
+  s_abs=0;
+  s_inc=0;
+  s_inm=0;
+  we3=0;
+  wez=0;
+  op=3'b000;
+
+  /// JR FIN   
+  #40;
+  s_abs=0;
+  s_inc=0;
+  s_inm=0;
+  we3=0;
+  wez=0;
+  op=3'b000;
+
+  /// JR FIN   
+  #40;
+  s_abs=0;
+  s_inc=0;
+  s_inm=0;
+  we3=0;
+  wez=0;
+  op=3'b000;
+
+
+  #40;
   $finish;
 end
     
