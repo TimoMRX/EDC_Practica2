@@ -1,3 +1,4 @@
+// Autor: Timoté Merieux alu0101318189
 `timescale 1 ns / 10 ps 
 
 module microc_tb;
@@ -100,9 +101,16 @@ initial
     wez=0;
     op=3'b000;
 
+  end else begin
+    s_abs=0;
+    s_inc=1;
+    s_inm=0;
+    we3=0;
+    wez=0;
+    op=3'b000;
   end
 
-  
+
   // JR SIGUE
   #40;
   s_abs=0;
@@ -131,9 +139,9 @@ initial
   wez=1;
   op=3'b011;
     
+  #40;
   if (z == 1) begin
     // JZ FIN
-    
     s_abs=1;
     s_inc=0;
     s_inm=0;
@@ -141,6 +149,13 @@ initial
     wez=0;
     op=3'b000;
 
+  end else begin
+    s_abs=0;
+    s_inc=1;
+    s_inm=0;
+    we3=0;
+    wez=0;
+    op=3'b000;
   end
   
   /// JR FIN   

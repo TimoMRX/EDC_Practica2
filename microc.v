@@ -1,9 +1,11 @@
+// Autor: Timoté Merieux alu0101318189
+
 module microc(input wire clk, reset, s_abs, s_inc, s_inm, we3, wez, input wire [2:0] op, output wire z, output wire [5:0] opcode);
 //Microcontrolador sin memoria de datos de un solo ciclo
 
 wire [9:0] pc_in, pc_out, sum_out, mux_out;
 wire [15:0] instruction;
-wire [7:0] inm, variableBasura, alu_out, wd3, rd1, rd2;
+wire [7:0] inm, var, alu_out, wd3, rd1, rd2;
 wire zalu;
 //Instanciar e interconectar pc, memprog, regfile, alu, sum, biestable Z y mux's
 
@@ -23,9 +25,9 @@ assign inm = instruction[11:4];
 mux2 muxINM(.d0(alu_out), .d1(inm), .s(s_inm), .y(wd3));
 
 
-assign variableBasura = instruction[11:4];
+assign var = instruction[11:4];
 
-regfile register(.clk(clk), .we3(we3), .ra1(variableBasura[7:4]), .ra2(variableBasura[3:0]), .wa3(instruction[3:0]), .wd3(wd3), .rd1(rd1), .rd2(rd2));
+regfile register(.clk(clk), .we3(we3), .ra1(var[7:4]), .ra2(var[3:0]), .wa3(instruction[3:0]), .wd3(wd3), .rd1(rd1), .rd2(rd2));
 
 alu alu(.a(rd1), .b(rd2), .op(op), .y(alu_out), .zero(zalu));
 
